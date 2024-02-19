@@ -1,0 +1,31 @@
+{
+  "name": "evenride-back",
+  "version": "0.0.1",
+  "description": "This is a platform engineered to streamline the vehicle booking process for events, efficiently connecting clients and car owners.",
+  "author": "Pxndxs",
+  "main": "dist/src/main",
+  "scripts": {
+    "build": "nest build",
+    "start:dev": "nest start --watch",
+    "start:prod": "node ."
+  },
+  "keywords": [
+    "nestjs",
+    "node",
+    "typescript",
+    "prisma",
+    "eventride"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@nestjs/common": "^10.3.3",
+    "@nestjs/config": "^3.2.0",
+    "@nestjs/core": "^10.3.3",
+    "@nestjs/platform-express": "^10.3.3"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^10.3.2",
+    "@types/node": "^20.11.19",
+    "typescript": "^5.3.3"
+  }
+}
