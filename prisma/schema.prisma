@@ -1,0 +1,138 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  OWNER
+  ADMIN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum VehicleType {
+  CAR
+  BUS
+  TAXI
+  TRUCK
+  LIMOUSINE
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  FINISHED
+}
+
+model User {
+  id              String   @id @default(uuid())
+  name            String
+  paternalSurname String
+  maternalSurname String
+  ci              String?
+  phone           String?  @unique
+  address         String?
+  birthDate       DateTime
+  gender          Gender
+  email           String   @unique
+  password        String
+  role            Role
+  status          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  createdBy       String?
+  updatedAt       DateTime @updatedAt
+  updatedBy       String?
+
+  creator User? @relation("UserCreator", fields: [createdBy], references: [id])
+  updater User? @relation("UserUpdater", fields: [updatedBy], references: [id])
+
+  createdUsers        User[]        @relation("UserCreator")
+  updatedUsers        User[]        @relation("UserUpdater")
+  createdVehicles     Vehicle[]     @relation("VehicleCreator")
+  updatedVehicles     Vehicle[]     @relation("VehicleUpdater")
+  createdEvents       Event[]       @relation("EventCreator")
+  updatedEvents       Event[]       @relation("EventUpdater")
+  createdReservations Reservation[] @relation("ReservationCreator")
+  updatedReservations Reservation[] @relation("ReservationUpdater")
+
+  reservations Reservation[] @relation("ReservationUser")
+
+  @@map("users")
+}
+
+model Vehicle {
+  id          String      @id @default(uuid())
+  plate       String      @unique
+  brand       String
+  model       String
+  capacity    Int
+  description String?
+  color       String
+  type        VehicleType
+  status      Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  createdBy   String?
+  updatedAt   DateTime    @updatedAt
+  updatedBy   String?
+
+  creator User? @relation("VehicleCreator", fields: [createdBy], references: [id])
+  updater User? @relation("VehicleUpdater", fields: [updatedBy], references: [id])
+
+  reservations Reservation[] @relation("ReservationVehicle")
+
+  @@map("vehicles")
+}
+
+model Event {
+  id                 String    @id @default(uuid())
+  name               String
+  description        String?
+  startDate          DateTime
+  endDate            DateTime?
+  numberOfPassengers Int
+  status             Boolean   @default(true)
+  createdAt          DateTime  @default(now())
+  createdBy          String?
+  updatedAt          DateTime  @updatedAt
+  updatedBy          String?
+
+  creator User? @relation("EventCreator", fields: [createdBy], references: [id])
+  updater User? @relation("EventUpdater", fields: [updatedBy], references: [id])
+
+  reservations Reservation[] @relation("ReservationEvent")
+
+  @@map("events")
+}
+
+model Reservation {
+  id         String            @id @default(uuid())
+  userId     String
+  vehicleId  String?
+  eventId    String
+  total_cost Float
+  state      ReservationStatus
+  status     Boolean           @default(true)
+  createdAt  DateTime          @default(now())
+  createdBy  String?
+  updatedAt  DateTime          @updatedAt
+  updatedBy  String?
+
+  user    User     @relation("ReservationUser", fields: [userId], references: [id])
+  vehicle Vehicle? @relation("ReservationVehicle", fields: [vehicleId], references: [id])
+  event   Event    @relation("ReservationEvent", fields: [eventId], references: [id])
+
+  creator User? @relation("ReservationCreator", fields: [createdBy], references: [id])
+  updater User? @relation("ReservationUpdater", fields: [updatedBy], references: [id])
+
+  @@map("reservations")
+}

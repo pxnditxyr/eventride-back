@@ -1,0 +1,29 @@
+GET http://localhost:3007/api/users
+
+GET http://localhost:3007/api/users/cd18940b-bbf2-47ea-ad90-12afe19a9f58
+
+POST http://localhost:3007/api/users
+Content-Type: application/json
+
+{
+  "name": "Pxndxs",
+  "paternalSurname": "Pxndxs Pat",
+  "maternalSurname": "Pxndxs Mat",
+  "ci": "1234567",
+  "phone": "1234567",
+  "address": "Calle 123",
+  "birthDate": "1999-12-12",
+  "gender": "MALE",
+  "email": "pxndxs@pxndxs.com",
+  "password": "123456",
+  "role": "ADMIN"
+}
+
+PATCH http://localhost:3007/api/users/1
+Content-Type: application/json
+
+{
+  "name": "Pxndxs xD"
+} 
+
+DELETE http://localhost:3007/api/users/cd18940b-bbf2-47ea-ad90-12afe19a9f58
