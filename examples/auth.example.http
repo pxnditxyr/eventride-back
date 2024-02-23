@@ -1,0 +1,22 @@
+
+
+POST http://localhost:3007/api/auth/signup
+Content-Type: application/json
+
+{
+  "name": "Pxndxs",
+  "paternalSurname": "Pxndxs Pat",
+  "maternalSurname": "Pxndxs Mat",
+  "birthDate": "1990-01-01",
+  "gender": "MALE",
+  "email": "pxndxs1@pxndxs.com",
+  "password": "Hola1234"
+}
+
+POST http://localhost:3007/api/auth/signin
+Content-Type: application/json
+
+{
+  "email": "pxndxs1@pxndxs.com",
+  "password": "$2b$10$NAPfDbD6JwsZaaqmv8WmI.iOvxbRRW8Zhc1StJRSWM4UKwLsz1.iS"
+}

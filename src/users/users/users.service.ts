@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, InternalServerErrorException, NotFound
 import { CreateUserDto, UpdateUserDto } from './dto'
 import { PrismaService } from 'src/prisma'
 import { User } from './entities/user.entity'
+import { hashSync } from 'bcrypt'
 
 @Injectable()
 export class UsersService {
@@ -12,10 +13,12 @@ export class UsersService {
 
   async create ( createUserDto : CreateUserDto ) : Promise<User> {
     try {
+      const encryptedPassword = hashSync( createUserDto.password, 10 )
       const user = await this.prismaService.user.create({
         data: {
           ...createUserDto,
-          birthDate: new Date( createUserDto.birthDate )
+          birthDate: new Date( createUserDto.birthDate ),
+          password: encryptedPassword
         }
       })
       return user
@@ -25,7 +28,10 @@ export class UsersService {
   }
 
   async findAll () : Promise<User[]> {
-    const users = await this.prismaService.user.findMany()
+    const users = await this.prismaService.user.findMany({
+      orderBy: { createdAt: 'desc' },
+      include: { creator: true , updater: true }
+    })
     return users
   }
 
@@ -52,7 +58,8 @@ export class UsersService {
         where: { id },
         data: {
           ...updateUserDto,
-          birthDate: updateUserDto.birthDate ? new Date( updateUserDto.birthDate ) : undefined
+          birthDate: updateUserDto.birthDate ? new Date( updateUserDto.birthDate ) : undefined,
+          password: updateUserDto.password ? hashSync( updateUserDto.password, 10 ) : undefined
         }
       })
       return user

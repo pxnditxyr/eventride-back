@@ -22,4 +22,5 @@ async function bootstrap () {
   
   logger.verbose( `This Application is running 🏃 on: ${ await app.getUrl() } 🌐` )
 }
+
 bootstrap()
