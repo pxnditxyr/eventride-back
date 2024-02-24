@@ -40,6 +40,19 @@ export class AuthService {
     }
   }
 
+  async validateUser ( id : string ) : Promise<User> {
+    const user = await this.usersService.findOne( id )
+    return user
+  }
+
+  async renewToken ( user : User ) : Promise<AuthResponse> {
+    const { id } = user
+    return {
+      user: this.userToUserReponse( user ),
+      token: this.generateToken( id )
+    }
+  }
+
   private generateToken ( id : string ) : string {
     const jwt = this.jwtService.sign({ id })
     return jwt

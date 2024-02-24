@@ -18,5 +18,8 @@ Content-Type: application/json
 
 {
   "email": "pxndxs1@pxndxs.com",
-  "password": "$2b$10$NAPfDbD6JwsZaaqmv8WmI.iOvxbRRW8Zhc1StJRSWM4UKwLsz1.iS"
+  "password": "Hola1234"
 }
+
+GET http://localhost:3007/api/auth/renew-token
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZTBiMzkwLTkyNDAtNDc0My1hNjg2LWI1NDBjNmE0MzJiNSIsImlhdCI6MTcwODc0MDA0OCwiZXhwIjoxNzA4ODI2NDQ4fQ.bB4oMfS_-035KE5e0_y7ZgmIyYi2QKagb51H96E8Nlg
