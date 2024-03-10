@@ -1,0 +1,22 @@
+POST http://localhost:3007/api/two-factor-auth/send-token
+Content-Type: application/json
+
+{
+  "email": "pxnditxyr@gmail.com"
+}
+
+
+POST http://localhost:3007/api/two-factor-auth/verify-token
+Content-Type: application/json
+
+{
+  "email": "pxnditxyr@gmail.com",
+  "token": "782699"
+}
+
+POST http://localhost:3007/api/two-factor-auth/resend-token
+Content-Type: application/json
+
+{
+  "email": "pxnditxyr@gmail.com"
+}

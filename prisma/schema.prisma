@@ -136,3 +136,16 @@ model Reservation {
 
   @@map("reservations")
 }
+
+model TwoFactorAuth {
+  id         String   @id @default(uuid())
+  email      String
+  secret     String
+  isVerified Boolean  @default(false)
+  isRevoked  Boolean  @default(false)
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("two_factor_auth")
+}
